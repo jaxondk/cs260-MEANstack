@@ -1,0 +1,20 @@
+<html>
+<head>
+  <title>Admin Page</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="javascripts/app.js"></script>
+</head>
+<body ng-app="app" ng-controller="AppCtrl">
+  <h1> Administrative Interface </h1>
+  <form ng-submit="addCandidate()">
+    <input type="text" ng-model="newCandidate"></input>
+    <button type="submit">Add Candidate</button>
+  </form>
+  <h3> Current Candidates </h3>
+  <div ng-repeat="candidate in candidates | orderBy: ['-votes', 'name']">
+    <span class="glyphicon glyphicon-remove" ng-click="delete(candidate)"></span>
+    {{candidate.name}} : {{candidate.votes}}
+  </div>
+</body>
+</html>
