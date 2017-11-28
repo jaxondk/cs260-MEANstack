@@ -25,13 +25,20 @@ router.post('/candidates',function(req,res,next) {
   });
 });
 
+//delete all
 router.delete('/candidates', (req,res,next) => {
   console.log("DELETE /candidates");
   Candidate.remove({}, (err) => {//Since we give an empty {} as first param, all objects in db will match and get removed
     if(err) return console.error(err);
-    //console.log("res: " +res);
     res.sendStatus(200);
   });
+});
+
+//delete one
+router.delete('/candidates/:candidate', function(req, res) {
+  console.log("in Delete");
+  req.candidate.remove();
+  res.sendStatus(200);
 });
 
 router.put('/candidates/:candidate/votefor',(req,res,next) => {
