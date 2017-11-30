@@ -3,46 +3,49 @@ angular.module('app', [])
   '$scope','$http',
   function($scope,$http){
     $scope.ballot = [];
-    $scope.candidates = [];
+    $scope.products = [];
     $scope.getAll = function() {
-      return $http.get('/candidates').success(function(data){
-        angular.copy(data, $scope.candidates); //copy candidates from DB to $scope.candidates
+      return $http.get('/products').success(function(data){
+        angular.copy(data, $scope.products); //copy products from DB to $scope.products
       });
     };
     $scope.getAll();
-    $scope.create = function(candidate) {
-      console.log("In create with candidate: "+candidate.name+" : "+candidate.votes);
-      return $http.post('/candidates', candidate).success(function(data){}); //not sure what's supposed to go in that f(x)
+    $scope.create = function(product) {
+      console.log("In create with product: "+product.name+" for $"+product.price+" w/ url: "+product.url);
+      return $http.post('/products', product).success(function(data){}); //not sure what's supposed to go in that f(x)
     };
-    $scope.voteFor = function(candidate) {
-      return $http.put('/candidates/' + candidate._id + '/votefor')
+    $scope.order = function(product) {
+      return $http.put('/products/' + product._id + '/order')
         .success(function(data){
-          console.log("voteFor worked");
-          candidate.votes += 1;
+          console.log("order worked");
+          product.orders += 1;
         });
     };
-    $scope.delete = function(candidate) {
-      $http.delete('/candidates/' + candidate._id )
+    $scope.delete = function(product) {
+      $http.delete('/products/' + product._id )
         .success(function(data){
           console.log("delete worked");
           $scope.getAll();
         });
     };
-    $scope.addCandidate = function() {
-      if($scope.newCandidate === "" || $scope.newCandidate === undefined) { return; }
-      console.log("In addCandidate with "+$scope.newCandidate);
+    $scope.addProduct = function() {
+      if($scope.newprodname === "" || $scope.newprodname === undefined) { return; }
+      console.log("In addProduct with "+$scope.newprodname);
       $scope.create({
-        name: $scope.newCandidate,
-        votes: 0,
+        name: $scope.newprodname,
+        price: $scope.newprodprice,
+        url: $scope.newprodurl
       });
-      $scope.newCandidate = '';
+      $scope.newprodname = '';
+      $scope.newprodprice = '';
+      $scope.newprodurl = '';
       $scope.getAll();
     };
-    $scope.incrementVotes = function(candidate) {
-        $scope.voteFor(candidate);
+    $scope.incrementOrders = function(product) {
+        $scope.order(product);
     }
-    $scope.delete = function(candidate) {
-      $http.delete('/candidates/' + candidate._id )
+    $scope.delete = function(product) {
+      $http.delete('/products/' + product._id )
         .success(function(data){
           console.log("delete worked");
           $scope.getAll();
@@ -55,7 +58,7 @@ angular.module('app', [])
       $scope.ballot = [];
       for (var i in $scope.candidates) {
         if ($scope.candidates[i].checked) {
-          $scope.incrementVotes($scope.candidates[i]);
+          $scope.incrementOrders($scope.candidates[i]);
           $scope.ballot.push($scope.candidates[i]);
         }
       }

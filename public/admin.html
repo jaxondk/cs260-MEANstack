@@ -7,14 +7,19 @@
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
   <h1> Administrative Interface </h1>
-  <form ng-submit="addCandidate()">
-    <input type="text" ng-model="newCandidate"></input>
-    <button type="submit">Add Candidate</button>
+  <form ng-submit="addProduct()">
+    <label for="name">Product Name: </label>
+    <input id="name" type="text" ng-model="newprodname"></input>
+    <label for="price">Product Price: </label>
+    <input id="price" type="text" ng-model="newprodprice"></input>
+    <label for="url">Product Image URL: </label>
+    <input id="url" type="text" ng-model="newprodurl"></input>
+    <button type="submit">Add Product</button>
   </form>
-  <h3> Current Candidates </h3>
-  <div ng-repeat="candidate in candidates | orderBy: ['-votes', 'name']">
-    <span class="glyphicon glyphicon-remove" ng-click="delete(candidate)"></span>
-    {{candidate.name}} : {{candidate.votes}}
+  <h3> Current Products </h3>
+  <div ng-repeat="product in products | orderBy: 'name'">
+    <span class="glyphicon glyphicon-remove" ng-click="delete(product)"></span>
+    {{product.name}}: ${{product.price}}. Orders: {{product.orders}} <img src="{{product.url}}" height="42" width="42">
   </div>
 </body>
 </html>

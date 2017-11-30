@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Candidate = mongoose.model('candidate'); //links up with models/candidates.js file
+var Product = mongoose.model('product'); //links up with models/products.js file
 
 //your top level app.js file takes care of connecting to the db for you b/c you added a few lines there
 //otherwise would need to do it here.
 
-router.get('/candidates', function(req,res,next) {
-  console.log("GET /candidates");
-  Candidate.find(function(err, candidates) {
+router.get('/products', function(req,res,next) {
+  console.log("GET /products");
+  Product.find(function(err, products) {
     if(err) return console.error(err);
-    console.log(candidates);
-    res.json(candidates);
+    console.log(products);
+    res.json(products);
   });
 });
 
-router.post('/candidates',function(req,res,next) {
-  console.log("POST /candidates");
-  var newcandidate = new Candidate(req.body); //instantiates a Candidate object
-  newcandidate.save((err,post) => {
+router.post('/products',function(req,res,next) {
+  console.log("POST /products");
+  var newproduct = new Product(req.body); //instantiates a Product object
+  newproduct.save((err,post) => {
     if(err) return console.error(err);
     console.log(post);
     res.sendStatus(200);
@@ -26,33 +26,33 @@ router.post('/candidates',function(req,res,next) {
 });
 
 //delete all
-router.delete('/candidates', (req,res,next) => {
-  console.log("DELETE /candidates");
-  Candidate.remove({}, (err) => {//Since we give an empty {} as first param, all objects in db will match and get removed
+router.delete('/products', (req,res,next) => {
+  console.log("DELETE /products");
+  Product.remove({}, (err) => {//Since we give an empty {} as first param, all objects in db will match and get removed
     if(err) return console.error(err);
     res.sendStatus(200);
   });
 });
 
 //delete one
-router.delete('/candidates/:candidate', function(req, res) {
+router.delete('/products/:product', function(req, res) {
   console.log("in Delete");
-  req.candidate.remove();
+  req.product.remove();
   res.sendStatus(200);
 });
 
-router.put('/candidates/:candidate/votefor',(req,res,next) => {
-  req.candidate.votefor((err,candidate) => {
-    res.json(candidate);
+router.put('/products/:product/order',(req,res,next) => {
+  req.product.order((err,product) => {
+    res.json(product);
   });
 });
 
-router.param('candidate', function(req, res, next, id) {
-  var query = Candidate.findById(id);
-  query.exec(function (err, candidate){
+router.param('product', function(req, res, next, id) {
+  var query = Product.findById(id);
+  query.exec(function (err, product){
     if (err) { return next(err); }
-    if (!candidate) { return next(new Error("can't find candidate")); }
-    req.candidate = candidate;
+    if (!product) { return next(new Error("can't find product")); }
+    req.product = product;
     return next();
   });
 });
