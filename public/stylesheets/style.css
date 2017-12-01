@@ -1,8 +1,22 @@
 body {
-  padding: 50px;
+  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.form-group {
+    margin: 20px;
+}
+
+.form-check {
+    margin: 20px;
+}
+
+#container {
+    padding: 30px;
+    border: 2px solid lightgray;
+    border-radius: 5px;
 }

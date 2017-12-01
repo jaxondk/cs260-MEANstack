@@ -2,7 +2,7 @@ angular.module('app', [])
 .controller('AppCtrl', [
   '$scope','$http',
   function($scope,$http){
-    $scope.ballot = [];
+    $scope.cart = [];
     $scope.products = [];
     $scope.getAll = function() {
       return $http.get('/products').success(function(data){
@@ -52,14 +52,13 @@ angular.module('app', [])
         });
     };
 
-    $scope.ballotResp = '';
-    $scope.submitBallot = function() {
-      console.log("Submitting ballot");
-      $scope.ballot = [];
-      for (var i in $scope.candidates) {
-        if ($scope.candidates[i].checked) {
-          $scope.incrementOrders($scope.candidates[i]);
-          $scope.ballot.push($scope.candidates[i]);
+    $scope.submitOrder = function() {
+      console.log("Submitting order");
+      $scope.cart = [];
+      for (var i in $scope.products) {
+        if ($scope.products[i].checked) {
+          $scope.incrementOrders($scope.products[i]);
+          $scope.cart.push($scope.products[i]);
         }
       }
     }

@@ -2,24 +2,30 @@
 <head>
   <title>Admin Page</title>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="stylesheets/style.css" rel="stylesheet">
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="javascripts/app.js"></script>
 </head>
 <body ng-app="app" ng-controller="AppCtrl">
-  <h1> Administrative Interface </h1>
-  <form ng-submit="addProduct()">
-    <label for="name">Product Name: </label>
-    <input id="name" type="text" ng-model="newprodname"></input>
-    <label for="price">Product Price: </label>
-    <input id="price" type="text" ng-model="newprodprice"></input>
-    <label for="url">Product Image URL: </label>
-    <input id="url" type="text" ng-model="newprodurl"></input>
-    <button type="submit">Add Product</button>
-  </form>
-  <h3> Current Products </h3>
-  <div ng-repeat="product in products | orderBy: 'name'">
-    <span class="glyphicon glyphicon-remove" ng-click="delete(product)"></span>
-    {{product.name}}: ${{product.price}}. Orders: {{product.orders}} <img src="{{product.url}}" height="42" width="42">
+  <div id="container">
+      <h1> Administrative Interface </h1>
+      <form ng-submit="addProduct()">
+        <div class="form-group">
+            <label for="name">Product Name: </label>
+            <input id="name" class="form-control" type="text" ng-model="newprodname"></input>
+            <label for="price">Product Price: </label>
+            <input id="price" class="form-control" type="text" ng-model="newprodprice"></input>
+            <label for="url">Product Image URL: </label>
+            <input id="url" class="form-control" type="text" ng-model="newprodurl"></input>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+
+      </form>
+      <h3> Current Products </h3>
+      <div ng-repeat="product in products | orderBy: 'name'">
+        <span class="glyphicon glyphicon-remove" ng-click="delete(product)"></span>
+        {{product.name}}: ${{product.price}}. Orders: {{product.orders}} <img src="{{product.url}}" height="42" width="42">
+      </div>
   </div>
 </body>
 </html>
